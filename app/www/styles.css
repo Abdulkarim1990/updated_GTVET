@@ -1,0 +1,74 @@
+/* GTVET-IDMS  Application Styles */
+
+/* ---- Login page ---- */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #006b3c 0%, #007a44 60%, #004d2b 100%);
+}
+
+.login-box {
+  background: #fff;
+  border-radius: 8px;
+  padding: 40px 50px;
+  width: 420px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  text-align: center;
+}
+
+.login-box h3 { color: #006b3c; }
+.login-box h5 { color: #666; margin-bottom: 20px; }
+
+/* ---- Dashboard general ---- */
+.skin-green .main-header .navbar,
+.skin-green .main-header .logo {
+  background-color: #006b3c !important;
+}
+.skin-green .main-sidebar  { background-color: #003d22; }
+.skin-green .sidebar a      { color: #d4edda !important; }
+
+/* ---- KPI boxes (home page) ---- */
+.kpi-box {
+  background: #f8f9fa;
+  border-left: 4px solid #006b3c;
+  border-radius: 4px;
+  padding: 12px 16px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.kpi-box strong { font-size: 1.8em; color: #006b3c; display:block; }
+
+/* ---- Form rows ---- */
+.enrol-row, .pwsn-row, .wel-row, .ind-row,
+.exam-row,  .grad-row, .chal-row, .staff-row {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 6px 0;
+  margin-bottom: 2px;
+}
+.enrol-row:hover, .pwsn-row:hover, .wel-row:hover,
+.exam-row:hover,  .grad-row:hover, .staff-row:hover {
+  background: #f5fff8;
+}
+
+/* ---- Coming soon ---- */
+.coming-soon-box {
+  text-align: center;
+  padding: 80px 20px;
+  color: #999;
+}
+.coming-soon-icon { font-size: 4em; margin-bottom: 20px; }
+
+/* ---- Compact inputs inside table rows ---- */
+.enrol-row .form-group,
+.staff-row .form-group { margin-bottom: 4px; }
+
+.enrol-row .form-control,
+.staff-row .form-control { padding: 4px 8px; font-size: 0.88em; }
+
+/* ---- Validation alert ---- */
+.alert ul { margin-bottom: 0; padding-left: 20px; }
+
+/* ---- Page header ---- */
+.page-header { border-bottom: 2px solid #006b3c; margin-bottom: 24px; }
