@@ -900,6 +900,3 @@ m1Server <- function(id, pool, auth) {
 
   })  # moduleServer
 }
-
-# NULL-coalescing helper (base R equivalent of %||% from rlang)
-`%||%` <- function(a, b) if (!is.null(a) && !is.na(a) && length(a) > 0) a else b

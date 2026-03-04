@@ -23,44 +23,81 @@ source("modules/m1_biodata/m1_module.R")
 source("modules/m2_staff/m2_module.R")
 
 # ------ Create shared DB connection pool ---------------------
-pool <- make_pool(DB_CONFIG)
+pool <- tryCatch(
+  make_pool(DB_CONFIG),
+  error = function(e) {
+    message("[global.R] Database connection failed: ", conditionMessage(e))
+    message("[global.R] Check DB_CONFIG / environment variables and ensure PostgreSQL is running.")
+    NULL
+  }
+)
 
 # Ensure pool is closed when the app shuts down
 onStop(function() {
-  pool::poolClose(pool)
+  if (!is.null(pool)) pool::poolClose(pool)
 })
 
 # ------ Cached reference lookups (refreshed on app start) -----
-REF <- list(
-  regions    = load_regions(pool),
-  programmes = load_programmes(pool),
-  exam_types = load_exam_types(pool),
-  impairments = load_impairments(pool),
-  challenges  = load_challenges(pool)
-)
+if (!is.null(pool)) {
+  REF <- tryCatch(
+    list(
+      regions     = load_regions(pool),
+      programmes  = load_programmes(pool),
+      exam_types  = load_exam_types(pool),
+      impairments = load_impairments(pool),
+      challenges  = load_challenges(pool)
+    ),
+    error = function(e) {
+      message("[global.R] Failed to load reference data: ", conditionMessage(e))
+      list(
+        regions     = data.frame(region_id = integer(), region_name = character()),
+        programmes  = data.frame(programme_id = integer(), programme_code = character(),
+                                 programme_name = character()),
+        exam_types  = data.frame(exam_type_id = integer(), exam_type_name = character()),
+        impairments = data.frame(impairment_id = integer(), impairment_name = character()),
+        challenges  = data.frame(challenge_id = integer(), challenge_name = character())
+      )
+    }
+  )
+} else {
+  REF <- list(
+    regions     = data.frame(region_id = integer(), region_name = character()),
+    programmes  = data.frame(programme_id = integer(), programme_code = character(),
+                             programme_name = character()),
+    exam_types  = data.frame(exam_type_id = integer(), exam_type_name = character()),
+    impairments = data.frame(impairment_id = integer(), impairment_name = character()),
+    challenges  = data.frame(challenge_id = integer(), challenge_name = character())
+  )
+}
 
 # Named vectors for selectInput choices
-region_choices <- setNames(REF$regions$region_id, REF$regions$region_name)
+region_choices <- if (nrow(REF$regions) > 0)
+  setNames(REF$regions$region_id, REF$regions$region_name)
+else
+  character(0)
 
-programme_choices <- setNames(
-  REF$programmes$programme_id,
-  paste0("[", REF$programmes$programme_code, "] ", REF$programmes$programme_name)
-)
+programme_choices <- if (nrow(REF$programmes) > 0)
+  setNames(
+    REF$programmes$programme_id,
+    paste0("[", REF$programmes$programme_code, "] ", REF$programmes$programme_name)
+  )
+else
+  character(0)
 
-exam_type_choices <- setNames(
-  REF$exam_types$exam_type_id,
-  REF$exam_types$exam_type_name
-)
+exam_type_choices <- if (nrow(REF$exam_types) > 0)
+  setNames(REF$exam_types$exam_type_id, REF$exam_types$exam_type_name)
+else
+  character(0)
 
-impairment_choices <- setNames(
-  REF$impairments$impairment_id,
-  REF$impairments$impairment_name
-)
+impairment_choices <- if (nrow(REF$impairments) > 0)
+  setNames(REF$impairments$impairment_id, REF$impairments$impairment_name)
+else
+  character(0)
 
-challenge_choices <- setNames(
-  REF$challenges$challenge_id,
-  REF$challenges$challenge_name
-)
+challenge_choices <- if (nrow(REF$challenges) > 0)
+  setNames(REF$challenges$challenge_id, REF$challenges$challenge_name)
+else
+  character(0)
 
 month_choices <- c(
   "January","February","March","April","May","June",

@@ -53,12 +53,10 @@ ui <- fluidPage(
   
   useShinyjs(),
   
-  shinyjs::hidden(
-    div(id = "app_login",
-        loginUI("auth")
-    )
+  div(id = "app_login",
+      loginUI("auth")
   ),
-  
+
   shinyjs::hidden(
     div(id = "app_main",
         shinydashboard::dashboardPage(

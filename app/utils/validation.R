@@ -3,6 +3,9 @@
 # All business rules from Section 5.1 of the System Design
 # =============================================================
 
+# NULL-coalescing helper — available across all modules
+`%||%` <- function(a, b) if (!is.null(a) && length(a) > 0 && !is.na(a[1])) a else b
+
 #' Return character(0) (no errors) or a character vector of error messages
 validate_enrolment_row <- function(male, female, pwsn_male, pwsn_female) {
   errors <- character(0)
