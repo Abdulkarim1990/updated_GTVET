@@ -123,8 +123,8 @@ loginServer <- function(id, pool) {
       auth$must_change_pw <- isTRUE(user$must_change_pw[1])
 
       if (auth$must_change_pw) {
-        shinyjs::hide("login_panel")
-        shinyjs::show("change_pw_panel")
+        shinyjs::hide(ns("login_panel"))
+        shinyjs::show(ns("change_pw_panel"))
       } else {
         auth$logged_in <- TRUE
       }
@@ -158,7 +158,7 @@ loginServer <- function(id, pool) {
 
       auth$must_change_pw <- FALSE
       auth$logged_in      <- TRUE
-      shinyjs::hide("change_pw_panel")
+      shinyjs::hide(ns("change_pw_panel"))
     })
 
     # Return reactive read-only view of auth state

@@ -4,6 +4,17 @@
 
 server <- function(input, output, session) {
 
+  # ------ DB availability check ----------------------------
+  if (is.null(pool)) {
+    showModal(modalDialog(
+      title = "Database Unavailable",
+      "The application cannot connect to the database. Please contact your system administrator.",
+      easyClose = FALSE,
+      footer = NULL
+    ))
+    return()
+  }
+
   # ------ Authentication -----------------------------------
   auth <- loginServer("auth", pool)
 
