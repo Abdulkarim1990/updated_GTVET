@@ -71,33 +71,38 @@ if (!is.null(pool)) {
 }
 
 # Named vectors for selectInput choices
-region_choices <- if (nrow(REF$regions) > 0)
+region_choices <- if (nrow(REF$regions) > 0) {
   setNames(REF$regions$region_id, REF$regions$region_name)
-else
+} else {
   character(0)
+}
 
-programme_choices <- if (nrow(REF$programmes) > 0)
+programme_choices <- if (nrow(REF$programmes) > 0) {
   setNames(
     REF$programmes$programme_id,
     paste0("[", REF$programmes$programme_code, "] ", REF$programmes$programme_name)
   )
-else
+} else {
   character(0)
+}
 
-exam_type_choices <- if (nrow(REF$exam_types) > 0)
+exam_type_choices <- if (nrow(REF$exam_types) > 0) {
   setNames(REF$exam_types$exam_type_id, REF$exam_types$exam_type_name)
-else
+} else {
   character(0)
+}
 
-impairment_choices <- if (nrow(REF$impairments) > 0)
+impairment_choices <- if (nrow(REF$impairments) > 0) {
   setNames(REF$impairments$impairment_id, REF$impairments$impairment_name)
-else
+} else {
   character(0)
+}
 
-challenge_choices <- if (nrow(REF$challenges) > 0)
+challenge_choices <- if (nrow(REF$challenges) > 0) {
   setNames(REF$challenges$challenge_id, REF$challenges$challenge_name)
-else
+} else {
   character(0)
+}
 
 month_choices <- c(
   "January","February","March","April","May","June",
