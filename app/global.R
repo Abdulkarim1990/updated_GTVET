@@ -21,6 +21,7 @@ source("utils/validation.R")
 source("modules/auth/auth_module.R")
 source("modules/m1_biodata/m1_module.R")
 source("modules/m2_staff/m2_module.R")
+source("modules/panels/panels_server.R")
 
 # ------ Create shared DB connection pool ---------------------
 pool <- tryCatch(
